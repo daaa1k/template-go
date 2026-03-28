@@ -19,6 +19,12 @@ copier copy gh:daaa1k/template-go path/to/destination
 copier update
 ```
 
+### Local Test
+
+```
+copier copy --data-file test-input.yml --vcs-ref=HEAD . test
+```
+
 ## License
 
 MIT
