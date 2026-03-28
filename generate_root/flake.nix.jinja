@@ -1,0 +1,206 @@
+{
+  description = "{{ project_name }} — {{ project_description }}";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+  }: let
+    # Read version from VERSION file to keep it in sync automatically.
+    version = builtins.replaceStrings ["\n"] [""] (builtins.readFile ./VERSION);
+
+    # Pre-built binary hashes for each supported platform.
+    # Update these whenever a new version is released:
+    #   nix store prefetch-file --hash-type sha256 --json <url>
+    # Leave as "" to disable the {{ project_name }}-bin package for that platform.
+    binaryHashes = {
+      "x86_64-linux" = "";
+      "aarch64-darwin" = "";
+    };
+
+    # Map Nix system strings to GitHub Release artifact names.
+    binaryArtifacts = {
+      "x86_64-linux" = "{{ project_name }}-linux-amd64";
+      "aarch64-darwin" = "{{ project_name }}-darwin-arm64";
+    };
+
+    # Build a package wrapping the pre-built GitHub Release binary.
+    #
+    # On Linux (including WSL2 + NixOS), autoPatchelfHook rewrites the ELF
+    # interpreter and RPATH so the binary works under the Nix store layout.
+    mkBinaryPackage = pkgs: let
+      system = pkgs.stdenv.hostPlatform.system;
+      artifact = binaryArtifacts.${system}
+            or (throw "{{ project_name }}-bin: no pre-built binary for ${system}");
+      hash = binaryHashes.${system};
+      src = pkgs.fetchurl {
+        url = "https://github.com/{{ owner }}/{{ project_name }}/releases/download/v${version}/${artifact}";
+        inherit hash;
+      };
+    in
+      pkgs.stdenv.mkDerivation {
+        pname = "{{ project_name }}-bin";
+        inherit version src;
+
+        dontUnpack = true;
+
+        nativeBuildInputs = pkgs.lib.optionals pkgs.stdenv.isLinux [
+          pkgs.autoPatchelfHook
+        ];
+
+        buildInputs = pkgs.lib.optionals pkgs.stdenv.isLinux [
+          pkgs.glibc
+        ];
+
+        installPhase = ''
+          install -Dm755 $src $out/bin/{{ project_name }}
+        '';
+      };
+
+    # Home Manager module — system-agnostic, exported at the top level.
+    #
+    # Usage in a Home Manager configuration:
+    #
+    #   inputs.{{ project_name }}.url = "github:{{ owner }}/{{ project_name }}";
+    #
+    #   { inputs, ... }: {
+    #     imports = [ inputs.{{ project_name }}.homeManagerModules.default ];
+    #     programs.{{ project_name }} = {
+    #       enable = true;
+    #       # Use the pre-built binary instead of building from source:
+    #       # package = inputs.{{ project_name }}.packages.${pkgs.system}.{{ project_name }}-bin;
+    #     };
+    #   }
+    hmModule = {
+      config,
+      lib,
+      pkgs,
+      ...
+    }: let
+      cfg = config.programs.{{ project_name }};
+      settingsFormat = pkgs.formats.yaml {};
+    in {
+      options.programs.{{ project_name }} = {
+        enable = lib.mkEnableOption "{{ project_name }}";
+
+        package = lib.mkOption {
+          type = lib.types.package;
+          default = self.packages.${pkgs.system}.default;
+          defaultText = lib.literalExpression "{{ project_name }}.packages.\${pkgs.system}.default";
+          description = ''
+            The {{ project_name }} package to install.
+
+            Two variants are available:
+            - `{{ project_name }}.packages.''${pkgs.system}.default` — built from source via buildGoModule (default)
+            - `{{ project_name }}.packages.''${pkgs.system}.{{ project_name }}-bin` — pre-built binary from GitHub Releases
+              (faster setup; no Go compilation required; supports x86_64-linux and aarch64-darwin)
+          '';
+        };
+
+        settings = {};
+      };
+
+      config = lib.mkIf cfg.enable (lib.mkMerge [
+        { home.packages = [cfg.package]; }
+        (lib.mkIf (cfg.settings != {}) {
+          xdg.configFile."{{ project_name }}/config.yaml".source =
+            settingsFormat.generate "{{ project_name }}-config.yaml" cfg.settings;
+        })
+      ]);
+    };
+  in
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+
+        # Use Go 1.26 to match go.mod requirement.
+        go = pkgs.go_1_26;
+
+        {{ project_name }} = (pkgs.buildGoModule.override {inherit go;}) {
+          pname = "{{ project_name }}";
+          inherit version;
+
+          src = pkgs.lib.cleanSource ./.;
+
+          # Hash of the Go vendor directory fetched by Nix.
+          # vendor/ is not committed; Nix fetches modules via go.sum.
+          # To update after changing go.mod / go.sum:
+          #   1. Set vendorHash to pkgs.lib.fakeHash
+          #   2. Run: nix build .#{{ project_name }} 2>&1 | grep 'got:'
+          #   3. Replace the value below with the hash shown in 'got:'
+          vendorHash = "sha256-oMjqMwQZalpZmv7PPGIpREvXL/8kin5okHk4TUPS+b4=";
+
+          ldflags = ["-s" "-w" "-X main.version=${version}"];
+
+          meta = with pkgs.lib; {
+            description = "Paste clipboard image as Markdown link";
+            homepage = "https://github.com/{{ owner }}/{{ project_name }}";
+            license = licenses.mit;
+            mainProgram = "{{ project_name }}";
+          };
+        };
+
+        # Format check: `gofmt -l` on non-vendor Go files must produce no output.
+        fmtCheck = pkgs.runCommandLocal "{{ project_name }}-fmt" {} ''
+          src=${pkgs.lib.cleanSource ./.}
+          unformatted=$(find "$src" -name '*.go' -not -path "*/vendor/*" \
+            | xargs ${go}/bin/gofmt -l)
+          if [ -n "$unformatted" ]; then
+            echo "gofmt found unformatted files — run: gofmt -w ."
+            echo "$unformatted"
+            exit 1
+          fi
+          touch $out
+        '';
+
+        # Vet check: runs `go vet ./...` against the source.
+        vetCheck =
+          pkgs.runCommandLocal "{{ project_name }}-vet"
+          {nativeBuildInputs = [go];}
+          ''
+            cp -r ${pkgs.lib.cleanSource ./.} src
+            chmod -R u+w src
+            ln -sf {{ '${' + project_name + '.goModules}' }} src/vendor
+            cd src
+            HOME=$TMPDIR CGO_ENABLED=0 GOFLAGS=-mod=vendor go vet ./...
+            touch $out
+          '';
+      in {
+        # --- packages ---------------------------------------------------
+        packages =
+          {
+            default = {{ project_name }};
+            inherit {{ project_name }};
+          }
+          // pkgs.lib.optionalAttrs (binaryArtifacts ? ${system} && binaryHashes.${system} != "") {
+            {{ project_name }}-bin = mkBinaryPackage pkgs;
+          };
+
+        # --- checks (run by `nix flake check`) --------------------------
+        checks = {
+          inherit {{ project_name }};
+          {{ project_name }}-fmt = fmtCheck;
+          {{ project_name }}-vet = vetCheck;
+        };
+
+        # --- devShell ---------------------------------------------------
+        devShells.default = pkgs.mkShell {
+          packages = [
+            go
+            pkgs.gopls
+            pkgs.gotools
+            pkgs.golangci-lint
+          ];
+        };
+      }
+    )
+    // {
+      # --- Home Manager module (system-agnostic) ----------------------
+      homeManagerModules.default = hmModule;
+    };
+}

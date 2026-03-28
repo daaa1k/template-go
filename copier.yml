@@ -1,0 +1,16 @@
+_subdirectory: "generate_root"
+
+owner:
+  type: str
+  help: "Enter the owner name"
+  default: "daaa1k"
+
+project_name:
+  type: str
+  help: "Enter the project name"
+  default: "my_project"
+
+project_description:
+  type: str
+  help: "Enter the project description"
+  default: ""

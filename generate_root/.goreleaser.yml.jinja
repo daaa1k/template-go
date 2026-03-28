@@ -1,0 +1,73 @@
+version: 2
+
+release:
+  # Stay draft until tagpr workflow assets job publishes the release after GoReleaser.
+  draft: true
+  # tagpr creates a draft release before GoReleaser runs (`.tagpr` release = draft).
+  # Without this flag GoReleaser looks up releases via GET /releases/tags/{tag},
+  # which returns 404 for drafts, causing a conflict or failure.
+  use_existing_draft: true
+  extra_files:
+    - glob: LICENSE
+    - glob: CREDITS
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w -X main.version={{ '{{.Version}}' }}
+    flags:
+      - -trimpath
+
+archives:
+  # Raw binary for Nix flake.nix (fetchurl + dontUnpack = true)
+  - id: raw
+    formats: [binary]
+    name_template: "{{ '{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}' }}"
+  # Archives for Homebrew and general distribution
+  - id: archive
+    ids: []
+    name_template: "{{ '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}' }}"
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    files:
+      - LICENSE
+      - CREDITS
+      - README.md
+      - CHANGELOG.md
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+# Homebrew tap auto-update
+homebrew_casks:
+  - ids: [archive]
+    repository:
+      owner: {{ owner }}
+      name: homebrew-tap
+      token: "{{ '{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}' }}"
+    homepage: "https://github.com/{{ owner }}/{{ project_name }}"
+    description: "Paste clipboard image as Markdown link"
+    license: "MIT"
+    directory: Casks
+    binaries:
+      - {{ project_name }}
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/{{ project_name }}"]
+          end

@@ -1,0 +1,74 @@
+[![Release](https://img.shields.io/github/release/{{ owner }}/{{ project_name }}.svg?style=for-the-badge)](https://github.com/{{ owner }}/{{ project_name }}/releases/latest)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](/LICENSE)
+[![CI status](https://img.shields.io/github/actions/workflow/status/{{ owner }}/{{ project_name }}/ci.yml?style=for-the-badge&branch=main)](https://github.com/{{ owner }}/{{ project_name }}/actions?workflow=ci)
+[![Powered By: GoReleaser](https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=for-the-badge)](https://github.com/goreleaser)
+[![GoReportCard](https://goreportcard.com/badge/github.com/{{ owner }}/{{ project_name }}?style=for-the-badge)](https://goreportcard.com/report/github.com/{{ owner }}/{{ project_name }})
+
+# {{ project_name }}
+
+
+## Installation
+
+### Homebrew (macOS / Linux)
+
+```sh
+brew install --cask {{ owner }}/tap/{{ project_name }}
+```
+
+### Go install
+
+```sh
+go install github.com/{{ owner }}/{{ project_name }}@latest
+```
+
+### Download binary
+
+Download a pre-built binary from [GitHub Releases](https://github.com/{{ owner }}/{{ project_name }}/releases).
+
+### Nix / Home Manager
+
+Add {{ project_name }} as a flake input and import the Home Manager module:
+
+```nix
+# flake.nix
+inputs.{{ project_name }}.url = "github:{{ owner }}/{{ project_name }}";
+```
+
+```nix
+# home.nix
+{ inputs, pkgs, ... }: {
+  imports = [ inputs.{{ project_name }}.homeManagerModules.default ];
+
+  programs.{{ project_name }} = {
+    enable = true;
+
+    # Optional: use the pre-built binary instead of compiling from source
+    # package = inputs.{{ project_name }}.packages.${pkgs.system}.{{ project_name }}-bin;
+  };
+}
+```
+**Package variants:**
+
+| Attribute | Description |
+|---|---|
+| `packages.${system}.default` | Built from source via `buildGoModule` |
+| `packages.${system}.{{ project_name }}-bin` | Pre-built binary from GitHub Releases (x86_64-linux, aarch64-darwin) |
+
+## Usage
+
+
+### Options
+
+
+### Examples
+
+
+## Platform support
+
+
+## Configuration
+
+
+## License
+
+MIT
