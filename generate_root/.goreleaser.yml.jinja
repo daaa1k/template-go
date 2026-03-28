@@ -60,7 +60,7 @@ homebrew_casks:
       name: homebrew-tap
       token: "{{ '{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}' }}"
     homepage: "https://github.com/{{ owner }}/{{ project_name }}"
-    description: "Paste clipboard image as Markdown link"
+    description: "{{ project_description }}"
     license: "MIT"
     directory: Casks
     binaries:
