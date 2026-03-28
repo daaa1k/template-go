@@ -27,10 +27,3 @@ jobs:
         uses: Songmu/tagpr@b3fb89424646b06c8aa460f50307c60b6a541425 # v1.17.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Update major semver tag
-        if: steps.tagpr.outputs.tag != ''
-        uses: haya14busa/action-update-semver@7d2c558640ea49e798d46539536190aff8c18715 # v1.5.1
-        with:
-          tag: ${{ steps.tagpr.outputs.tag }}
-          major_version_tag_only: true
