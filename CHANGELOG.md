@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.1.6](https://github.com/daaa1k/template-go/compare/v0.1.5...v0.1.6) - 2026-03-29
+- chore: Update dependency golangci-lint to v2.11.4 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/15
+
 ## [v0.1.5](https://github.com/daaa1k/template-go/compare/v0.1.4...v0.1.5) - 2026-03-28
 
 ## [v0.1.4](https://github.com/daaa1k/template-go/compare/v0.1.3...v0.1.4) - 2026-03-28
