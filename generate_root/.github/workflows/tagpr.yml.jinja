@@ -9,7 +9,7 @@ jobs:
   tagpr:
     runs-on: ubuntu-latest
     outputs:
-      tagpr-tag: ${{ steps.run-tagpr.outputs.tag }}
+      tagpr-tag: ${{ '{{' }} steps.run-tagpr.outputs.tag {{ '}}' }}
     permissions:
       contents: write
       pull-requests: write
@@ -35,17 +35,17 @@ jobs:
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: |
-            ${{ env.GOMODCACHE }}
-            ${{ env.GOCACHE }}
-          key: ${{ runner.os }}-go-${{ hashFiles('go.sum') }}
+            ${{ '{{' }} env.GOMODCACHE {{ '}}' }}
+            ${{ '{{' }} env.GOCACHE {{ '}}' }}
+          key: ${{ '{{' }} runner.os {{ '}}' }}-go-${{ '{{' }} hashFiles('go.sum') {{ '}}' }}
           restore-keys: |
-            ${{ runner.os }}-go-
+            ${{ '{{' }} runner.os {{ '}}' }}-go-
 
       - id: run-tagpr
         name: Run tagpr
         uses: Songmu/tagpr@b3fb89424646b06c8aa460f50307c60b6a541425 # v1.17.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ '{{' }} secrets.GITHUB_TOKEN {{ '}}' }}
 
   assets:
     needs: tagpr
@@ -62,7 +62,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-          ref: ${{ needs.tagpr.outputs.tagpr-tag }}
+          ref: ${{ '{{' }} needs.tagpr.outputs.tagpr-tag {{ '}}' }}
           persist-credentials: false
 
       - name: Setup mise
@@ -78,17 +78,17 @@ jobs:
           version: "~> v2"
           args: --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ '{{' }} secrets.GITHUB_TOKEN {{ '}}' }}
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ '{{' }} secrets.HOMEBREW_TAP_GITHUB_TOKEN {{ '}}' }}
 
       # After GoReleaser: tagpr has already created a draft release for this tag; publish it.
       # Use `gh release edit` (by tag) instead of REST PATCH by numeric id — jq .id on 404 can yield
       # "null" or other non-numeric values and break PATCH URLs.
       - name: Publish GitHub Release (exit draft)
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-          TAG: ${{ needs.tagpr.outputs.tagpr-tag }}
+          GH_TOKEN: ${{ '{{' }} secrets.GITHUB_TOKEN {{ '}}' }}
+          GH_REPO: ${{ '{{' }} github.repository {{ '}}' }}
+          TAG: ${{ '{{' }} needs.tagpr.outputs.tagpr-tag {{ '}}' }}
         run: |
           set -euo pipefail
           TAG="${TAG#refs/tags/}"
@@ -159,8 +159,8 @@ jobs:
 
       - name: Commit updated flake.nix
         env:
-          TAGPR_TAG: ${{ needs.tagpr.outputs.tagpr-tag }}
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+          TAGPR_TAG: ${{ '{{' }} needs.tagpr.outputs.tagpr-tag {{ '}}' }}
+          SSH_PRIVATE_KEY: ${{ '{{' }} secrets.DEPLOY_KEY {{ '}}' }}
         run: |
           set -euo pipefail
           # ghalint requires checkout persist-credentials: false; use ssh-agent here for push only.
