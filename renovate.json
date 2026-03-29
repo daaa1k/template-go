@@ -1,6 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
+  "github-actions": {
+    "managerFilePatterns": [
+      "/(^|/)\\.(?:github|gitea|forgejo)/(?:workflows|actions)/.+\\.ya?ml\\.jinja$/"
+    ]
+  },
+  "mise": {
+    "managerFilePatterns": ["**/mise.toml.jinja"]
+  },
   "minimumReleaseAge": "5 days",
   "schedule": ["* 10-14 * * 6"],
   "timezone": "Asia/Tokyo",
@@ -15,10 +23,23 @@
       "commitMessagePrefix": "ci:"
     },
     {
+      "description": "Group mise patch updates into one PR",
+      "matchManagers": ["mise"],
+      "matchUpdateTypes": ["patch"],
+      "groupName": "mise patch dependencies",
+      "commitMessagePrefix": "chore:"
+    },
+    {
       "description": "Prefix non-patch GitHub Actions updates",
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["major", "minor"],
       "commitMessagePrefix": "ci:"
+    },
+    {
+      "description": "Prefix non-patch mise updates",
+      "matchManagers": ["mise"],
+      "matchUpdateTypes": ["major", "minor"],
+      "commitMessagePrefix": "chore:"
     }
   ]
 }
