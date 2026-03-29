@@ -10,7 +10,7 @@
 ### Copy
 
 ```
-copier copy gh:daaa1k/template-go path/to/destination
+copier copy https://github.com/daaa1k/template-go path/to/destination
 ```
 
 ### Update
