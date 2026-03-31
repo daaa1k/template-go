@@ -1,5 +1,7 @@
 # Changelog
 
+## [v0.1.10](https://github.com/daaa1k/template-go/compare/v0.1.9...v0.1.10) - 2026-03-31
+
 ## [v0.1.9](https://github.com/daaa1k/template-go/compare/v0.1.8...v0.1.9) - 2026-03-29
 
 ## [v0.1.8](https://github.com/daaa1k/template-go/compare/v0.1.7...v0.1.8) - 2026-03-29
