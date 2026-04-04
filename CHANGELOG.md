@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.1.12](https://github.com/daaa1k/template-go/compare/v0.1.11...v0.1.12) - 2026-04-04
+- ci: Update actions/setup-go action to v6.4.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/22
+
 ## [v0.1.11](https://github.com/daaa1k/template-go/compare/v0.1.10...v0.1.11) - 2026-03-31
 
 ## [v0.1.10](https://github.com/daaa1k/template-go/compare/v0.1.9...v0.1.10) - 2026-03-31
