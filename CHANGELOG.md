@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.1.14](https://github.com/daaa1k/template-go/compare/v0.1.13...v0.1.14) - 2026-04-11
+- ci: update Songmu/tagpr action to v1.18.1 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/28
+- ci: update daaa1k/github-actions-lint action to v1.0.4 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/26
+
 ## [v0.1.13](https://github.com/daaa1k/template-go/compare/v0.1.12...v0.1.13) - 2026-04-05
 
 ## [v0.1.12](https://github.com/daaa1k/template-go/compare/v0.1.11...v0.1.12) - 2026-04-04
