@@ -1,4 +1,5 @@
 {
+<<<<<<< before updating
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>daaa1k/renovate-config"],
   "github-actions": {
@@ -9,4 +10,7 @@
   "mise": {
     "managerFilePatterns": ["**/mise.toml.jinja"]
   }
+=======
+  "extends": ["github>daaa1k/renovate-config"]
+>>>>>>> after updating
 }
