@@ -1,6 +1,11 @@
 # Changelog
 
 ## [v0.1.15](https://github.com/daaa1k/template-go/compare/v0.1.14...v0.1.15) - 2026-04-18
+- ci: update github-actions patch by @renovate[bot] in https://github.com/daaa1k/template-go/pull/31
+- chore: update dependency go to v1.26.2 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/30
+- chore: update dependency https://github.com/daaa1k/common-config to v1.3.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/33
+
+## [v0.1.15](https://github.com/daaa1k/template-go/compare/v0.1.14...v0.1.15) - 2026-04-18
 
 ## [v0.1.13](https://github.com/daaa1k/template-go/compare/v0.1.12...v0.1.13) - 2026-04-05
 
