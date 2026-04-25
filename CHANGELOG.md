@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.1.17](https://github.com/daaa1k/template-go/compare/v0.1.16...v0.1.17) - 2026-04-25
+- ci: update goreleaser/goreleaser-action action to v7.1.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/39
+
 ## [v0.1.16](https://github.com/daaa1k/template-go/compare/v0.1.15...v0.1.16) - 2026-04-23
 - chore: update dependency https://github.com/daaa1k/common-config to v1.5.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/37
 - ci: update github-actions patch by @renovate[bot] in https://github.com/daaa1k/template-go/pull/36
