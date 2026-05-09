@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.18](https://github.com/daaa1k/template-go/compare/v0.1.17...v0.1.18) - 2026-05-09
+- ci: update aquasecurity/trivy-action action to v0.36.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/44
+- chore: update dependency golangci-lint to v2.12.1 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/43
+- chore: update dependency prek to v0.3.11 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/42
+- chore(deps): update cachix/cachix-action digest to 5f2d7c5 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/41
+
 ## [v0.1.17](https://github.com/daaa1k/template-go/compare/v0.1.16...v0.1.17) - 2026-04-25
 - ci: update goreleaser/goreleaser-action action to v7.1.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/39
 
