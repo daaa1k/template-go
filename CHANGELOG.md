@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.1.19](https://github.com/daaa1k/template-go/compare/v0.1.18...v0.1.19) - 2026-05-30
+- ci: update Songmu/tagpr action to v1.19.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/48
+- ci: update goreleaser/goreleaser-action action to v7.2.1 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/47
+- chore: update dependency prek to v0.4.1 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/50
+- chore: update mise patch dependencies by @renovate[bot] in https://github.com/daaa1k/template-go/pull/46
+- ci: update goreleaser/goreleaser-action action to v7.2.2 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/51
+
 ## [v0.1.18](https://github.com/daaa1k/template-go/compare/v0.1.17...v0.1.18) - 2026-05-09
 - ci: update aquasecurity/trivy-action action to v0.36.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/44
 - chore: update dependency golangci-lint to v2.12.1 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/43
