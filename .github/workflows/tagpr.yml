@@ -27,4 +27,3 @@ jobs:
         uses: Songmu/tagpr@e84001bd5dac8defa0c75b3913937d284a3b3660 # v1.20.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAGPR_COMMIT_PREFIX: "chore:"
