@@ -5,3 +5,4 @@ release = true
 versionFile = VERSION
 majorLabels = "tagpr:major"
 minorLabels = "tagpr:minor"
+commitPrefix = "chore:"
