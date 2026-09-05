@@ -1,5 +1,46 @@
 # Changelog
 
+## [v0.1.20](https://github.com/daaa1k/template-go/compare/v0.1.19...v0.1.20) - 2026-09-05
+
+- chore: update dependency https://github.com/daaa1k/common-config to v1.5.3 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/52
+- chore: update mise patch dependencies to v0.4.3 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/53
+- chore: update mise patch dependencies by @renovate[bot] in https://github.com/daaa1k/template-go/pull/55
+- ci: update github-actions patch to v6.0.3 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/56
+- ci: update jdx/mise-action action to v4.1.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/57
+- ci: update Songmu/tagpr action to v1.20.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/58
+- [codex] use chore prefix for tagpr commits by @daaa1k in https://github.com/daaa1k/template-go/pull/59
+- chore: update dependency https://github.com/daaa1k/common-config to v1.5.5 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/60
+- chore: update dependency prek to v0.4.5 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/61
+- ci: update jdx/mise-action action to v4.2.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/62
+- ci: update actions/cache action to v5.1.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/64
+- ci: update actions/setup-go action to v6.5.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/65
+- ci: update nixbuild/nix-quick-install-action action to v35 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/67
+- ci: update actions/cache action to v6 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/66
+- ci: update actions/checkout action to v7 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/63
+- chore: update mise patch dependencies by @renovate[bot] in https://github.com/daaa1k/template-go/pull/68
+- ci: update goreleaser/goreleaser-action action to v7.2.3 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/69
+- chore: update dependency prek to v0.4.10 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/70
+- ci: update github-actions patch by @renovate[bot] in https://github.com/daaa1k/template-go/pull/71
+- ci: update actions/setup-go action to v7 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/72
+- chore: update dependency prek to v0.4.11 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/73
+- ci: update github-actions patch by @renovate[bot] in https://github.com/daaa1k/template-go/pull/74
+- chore: update dependency prek to v0.4.12 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/75
+- ci: update jdx/mise-action action to v4.2.5 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/77
+- chore: update mise patch dependencies by @renovate[bot] in https://github.com/daaa1k/template-go/pull/76
+- chore: update dependency go to v1.27.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/78
+- chore: update dependency golangci-lint to v2.13.1 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/79
+- chore: update dependency golangci-lint to v2.13.2 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/80
+- ci: update Songmu/tagpr action to v1.20.2 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/81
+
+## [v0.1.20](https://github.com/daaa1k/template-go/compare/v0.1.19...v0.1.20) - 2026-06-20
+
+- chore: update dependency https://github.com/daaa1k/common-config to v1.5.3 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/52
+- chore: update mise patch dependencies to v0.4.3 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/53
+- chore: update mise patch dependencies by @renovate[bot] in https://github.com/daaa1k/template-go/pull/55
+- ci: update github-actions patch to v6.0.3 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/56
+- ci: update jdx/mise-action action to v4.1.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/57
+- ci: update Songmu/tagpr action to v1.20.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/58
+
 ## [v0.1.19](https://github.com/daaa1k/template-go/compare/v0.1.18...v0.1.19) - 2026-05-30
 - ci: update Songmu/tagpr action to v1.19.0 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/48
 - ci: update goreleaser/goreleaser-action action to v7.2.1 by @renovate[bot] in https://github.com/daaa1k/template-go/pull/47
